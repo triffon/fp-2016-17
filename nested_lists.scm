@@ -34,9 +34,10 @@
 
 (define (branch p? f g) (lambda (x) (if (p? x) (f x) (g x))))
 
+(define (valid-atom? x) (and (not (pair? x)) (not (null? x))))
+
 (define (deep-fold nv term op l)
-  (foldr nv op (map (branch null? (lambda (x) '())
-                    (branch atom? term (lambda (x) (deep-fold nv term op x)))) l)))
+  (foldr nv op (map (branch valid-atom? term (lambda (x) (deep-fold nv term op x))) l)))
 
 
 (define (evali x) (eval x (interaction-environment)))
