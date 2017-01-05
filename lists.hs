@@ -4,7 +4,7 @@ import Prelude hiding
   (head, tail, null, length, (++),
    reverse, (!!), elem, init, last,
    take, drop, maximum, minimum,
-   sum, product, map, filter,
+   sum, product, map, filter, foldr,
    foldl, scanr, scanl, zip, unzip, zipWith)
 
 head :: [a] -> a
@@ -101,7 +101,7 @@ filter p = foldr (\x -> if p x then (x:) else id) []
 scanr :: (a -> b -> b) -> b -> [a] -> [b]
 {-
 scanr _ nv []      = [nv]
-scanr op nv (x:xs) = x `op` r : s
+scanr op nv (x:xs) = x `op` xr : s
   where s@(r:_) = scanr op nv xs
 -}
 
@@ -110,6 +110,10 @@ scanr op nv = foldr (\x s@(r:_) -> x `op` r : s) [nv]
 foldl :: (b -> a -> b) -> b -> [a] -> b
 foldl _  nv []     = nv
 foldl op nv (x:xs) = foldl op (nv `op` x) xs
+
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr _ nv  []     = nv
+foldr op nv (x:xs) = x `op` foldr op nv xs
 
 {-
 scanl :: (b -> a -> b) -> b -> [a] -> [b]
