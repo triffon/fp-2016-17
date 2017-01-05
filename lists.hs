@@ -111,11 +111,13 @@ foldl :: (b -> a -> b) -> b -> [a] -> b
 foldl _  nv []     = nv
 foldl op nv (x:xs) = foldl op (nv `op` x) xs
 
+{-
 scanl :: (b -> a -> b) -> b -> [a] -> [b]
 scanl op nv []     = [nv]
 scanl op nv (x:xs) = nv : scanl op (nv `op` x) xs
+-}
 
--- scanl op nv = foldl (\r x -> r:(r `op` x)) [nv]
+scanl op nv = foldl (\r x -> r ++ [last r `op` x]) [nv]
 
 {-
 zip :: [a] -> [b] -> [(a,b)]
