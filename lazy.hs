@@ -18,3 +18,8 @@ pythagoreanTriples = [ (x, y, z) |
 powers n = 1 : map (*n) (powers n)
 
 triplets = iterate (map (+3)) [3,2,1]
+
+f x = f (1 - x)
+f2 x = f2 $! (1 - x)
+
+lazyseq x y = y
